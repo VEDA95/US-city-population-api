@@ -1,0 +1,25 @@
+{
+  "name": "us-city-population-api",
+  "version": "1.0.0",
+  "description": "Rest API that returns the population for a given city in the U.S",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --exit ./tests/**/*.js",
+    "start": "node ./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VEDA95/US-city-population-api.git"
+  },
+  "author": "Stefan Netterfield",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VEDA95/US-city-population-api/issues"
+  },
+  "homepage": "https://github.com/VEDA95/US-city-population-api#readme",
+  "devDependencies": {
+    "chai": "^4.3.10",
+    "chai-http": "^4.4.0",
+    "mocha": "^10.2.0"
+  }
+}

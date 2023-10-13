@@ -1,2 +1,2 @@
 # US-city-population-api
-Rest API that returns the population for a given city in the U.S
+This is a backend written using Node.JS. Such backend is structured to operate as a REST API. The data that this serves is the population of a city in a given state in the United States of America.
