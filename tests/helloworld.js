@@ -9,7 +9,7 @@ chai.use(chaiHttp);
 describe('Hello world API test', () => {
     it('Should return string "Hello World!"', (done) => {
         chai.request(app)
-                .get('/')
+                .get('/api')
                 .set('Content-type', 'text/plain')
                 .end((_, response) => {
                     response.should.have.status(200);

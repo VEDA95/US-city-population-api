@@ -1,11 +1,14 @@
+require('dotenv').config();
+
 const http = require('node:http');
+const routes = require('./routes');
 
 const server = http.createServer((request, response) => {
-    response.writeHead(200, { 'Content-Type': 'text/plain' });
-    response.write('Hello World!');
-    response.end();
+    routes.lookup(request, response);
 });
 
-server.listen(8080);
+server.listen(parseInt(process.env.PORT), () => {
+    console.log(`REST API listening on port ${process.env.PORT}`);
+});
 
 module.exports = server;
