@@ -1,6 +1,7 @@
 {
   "name": "us-city-population-api",
   "version": "1.0.0",
+  "type": "module",
   "description": "Rest API that returns the population for a given city in the U.S",
   "main": "index.js",
   "scripts": {

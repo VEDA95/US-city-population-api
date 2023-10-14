@@ -1,4 +1,7 @@
-const router = require('find-my-way')({
+import findMyWay from 'find-my-way';
+import helloWorld from './hello.js';
+
+const router = findMyWay({
     ignoreTrailingSlash: true,
     defaultRoute: (_, response) => {
         response.writeHead(404, { 'Content-Type': 'text/plain' });
@@ -6,8 +9,8 @@ const router = require('find-my-way')({
         response.end();
     }
 });
-const helloWorld = require('./hello');
 
 router.get('/api/', helloWorld.get);
+router.get('/api/:name', helloWorld.post);
 
-module.exports = router;
+export default router;
