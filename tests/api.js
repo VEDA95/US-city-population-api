@@ -70,7 +70,7 @@ describe('API Endpoint /api/population/state/:state/city/:city', () => {
     });
 
     describe('PUT', () => {
-        const population = 1000000;
+        const population = Math.random() * 1000000;
 
         describe('Success', () => {
             it('201 - Updated population value successfully', (done) => {
