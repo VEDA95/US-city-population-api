@@ -1,5 +1,6 @@
 import findMyWay from 'find-my-way';
 import helloWorld from './hello.js';
+import population from './population.js';
 
 const router = findMyWay({
     ignoreTrailingSlash: true,
@@ -12,5 +13,7 @@ const router = findMyWay({
 
 router.get('/api/', helloWorld.get);
 router.get('/api/:name', helloWorld.post);
+router.get('/api/population/state/:state/city/:city', population.get);
+router.put('/api/population/state/:state/city/:city', population.put);
 
 export default router;
