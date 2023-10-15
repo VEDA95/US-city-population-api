@@ -16,17 +16,16 @@ describe('Reading and Writing Population data to JSON file', () => {
         await writeFile(testPathRead, JSON.stringify(populationData), { encoding: 'utf-8' });
     });
     
-    it('Reading Population Data', async () => {
+    it('Reading Population Data from JSON file', async () => {
         const populationDataRead = await readPopulationFile(testFileNameRead);
 
         deepEqual(populationDataRead, populationData);
     });
     
-    it('Writing Population Data', async () => {
+    it('Writing Population Data to JSON file', async () => {
         await writePopulationFile(testFileNameWrite, populationData);
 
-        const data = await readFile(testPathWrite, { encoding: 'utf-8' });
-        const populationDataWrite = JSON.parse(data);
+        const populationDataWrite = JSON.parse(await readFile(testPathWrite, { encoding: 'utf-8' }));
 
         deepEqual(populationDataWrite, populationData);
     });
