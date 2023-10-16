@@ -1,5 +1,6 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+import { randomUUID } from 'node:crypto';
 import app from '../index.js';
 import populationData from '../data/city_population_obj.js';
 
@@ -73,9 +74,12 @@ describe('API Endpoint /api/population/state/:state/city/:city', () => {
         const population = Math.floor(Math.random() * 1000000);
 
         describe('Success', () => {
-            it('201 - Updated population value successfully', (done) => {
+            it('201 - Created population value successfully', (done) => {
+                const newValue1 = randomUUID();
+                const newValue2 = randomUUID();
+
                 chai.request(app)
-                    .put('/api/population/state/Virginia/city/Alexandria')
+                    .put(`/api/population/state/${newValue1}/city/${newValue2}`)
                     .set('Content-Type', 'text/plain')
                     .send(population.toString())
                     .end((_, response) => {
@@ -88,7 +92,7 @@ describe('API Endpoint /api/population/state/:state/city/:city', () => {
                     });
             });
     
-            it('200 - Population value not updated', (done) => {
+            it('200 - Updated population value successfully', (done) => {
                 chai.request(app)
                     .put('/api/population/state/Virginia/city/Alexandria')
                     .set('Content-Type', 'text/plain')
@@ -105,21 +109,6 @@ describe('API Endpoint /api/population/state/:state/city/:city', () => {
         });
 
         describe('Error', () => {
-            it('400 - City or State not found', (done) => {
-                chai.request(app)
-                    .put('/api/population/state/Canada/city/Alexandria')
-                    .set('Content-Type', 'text/plain')
-                    .send(population.toString())
-                    .end((_, response) => {
-                        response.should.have.status(400);
-                        response.should.to.be.json;
-                        response.body.should.be.a('object');
-                        response.body.should.have.property('error');
-                        response.body.error.should.be.equal('State or City could not be found!');
-                        done();
-                    });
-            });
-    
             it('400 - Invalid State params', (done) => {
                 chai.request(app)
                     .put('/api/population/state/%20/city/Alexandria')
