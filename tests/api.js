@@ -16,7 +16,7 @@ describe('API Endpoint /api/population/state/:state/city/:city', () => {
                     .end((_, response) => {
                         response.should.have.status(200);
                         response.should.to.be.json;
-                        response.body.be.a('object');
+                        response.body.should.be.a('object');
                         response.body.should.have.property('population');
                         response.body.population.should.be.equal(populationData.Florida.Orlando);
                         done();
@@ -32,7 +32,7 @@ describe('API Endpoint /api/population/state/:state/city/:city', () => {
                     .end((_, response) => {
                         response.should.have.status(400);
                         response.should.to.be.json;
-                        response.body.be.a('object');
+                        response.body.should.be.a('object');
                         response.body.should.have.property('error');
                         response.body.error.should.be.equal('State or City could not be found!');
                         done();
@@ -46,7 +46,7 @@ describe('API Endpoint /api/population/state/:state/city/:city', () => {
                     .end((_, response) => {
                         response.should.have.status(400);
                         response.should.to.be.json;
-                        response.body.be.a('object');
+                        response.body.should.be.a('object');
                         response.body.should.have.property('error');
                         response.body.error.should.be.equal('State parameter is invalid!');
                         done();
@@ -60,7 +60,7 @@ describe('API Endpoint /api/population/state/:state/city/:city', () => {
                     .end((_, response) => {
                         response.should.have.status(400);
                         response.should.to.be.json;
-                        response.body.be.a('object');
+                        response.body.should.be.a('object');
                         response.body.should.have.property('error');
                         response.body.error.should.be.equal('City parameter is invalid!');
                         done();
@@ -81,7 +81,7 @@ describe('API Endpoint /api/population/state/:state/city/:city', () => {
                     .end((_, response) => {
                         response.should.have.status(201);
                         response.should.to.be.json;
-                        response.body.be.a('object');
+                        response.body.should.be.a('object');
                         response.body.should.have.property('population');
                         response.body.population.should.be.equal(population);
                         done();
@@ -96,7 +96,7 @@ describe('API Endpoint /api/population/state/:state/city/:city', () => {
                     .end((_, response) => {
                         response.should.have.status(200);
                         response.should.to.be.json;
-                        response.body.be.a('object');
+                        response.body.should.be.a('object');
                         response.body.should.have.property('population');
                         response.body.population.should.be.equal(population);
                         done();
@@ -105,7 +105,7 @@ describe('API Endpoint /api/population/state/:state/city/:city', () => {
         });
 
         describe('Error', () => {
-            it('400 - Error: City or State not found', (done) => {
+            it('400 - City or State not found', (done) => {
                 chai.request(app)
                     .put('/api/population/state/Canada/city/Arlington')
                     .set('Content-Type', 'application/json')
@@ -113,7 +113,7 @@ describe('API Endpoint /api/population/state/:state/city/:city', () => {
                     .end((_, response) => {
                         response.should.have.status(400);
                         response.should.to.be.json;
-                        response.body.be.a('object');
+                        response.body.should.be.a('object');
                         response.body.should.have.property('error');
                         response.body.error.should.be.equal('State or City could not be found!');
                         done();
@@ -128,7 +128,7 @@ describe('API Endpoint /api/population/state/:state/city/:city', () => {
                     .end((_, response) => {
                         response.should.have.status(400);
                         response.should.to.be.json;
-                        response.body.be.a('object');
+                        response.body.should.be.a('object');
                         response.body.should.have.property('error');
                         response.body.error.should.be.equal('State parameter is invalid!');
                         done();
@@ -143,7 +143,7 @@ describe('API Endpoint /api/population/state/:state/city/:city', () => {
                     .end((_, response) => {
                         response.should.have.status(400);
                         response.should.to.be.json;
-                        response.body.be.a('object');
+                        response.body.should.be.a('object');
                         response.body.should.have.property('error');
                         response.body.error.should.be.equal('City parameter is invalid!');
                         done();
@@ -158,7 +158,7 @@ describe('API Endpoint /api/population/state/:state/city/:city', () => {
                     .end((_, response) => {
                         response.should.have.status(400);
                         response.should.to.be.json;
-                        response.body.be.a('object');
+                        response.body.should.be.a('object');
                         response.body.should.have.property('error');
                         response.body.error.should.be.equal('The body MIME type is invalid!');
                         done();
@@ -173,7 +173,7 @@ describe('API Endpoint /api/population/state/:state/city/:city', () => {
                     .end((_, response) => {
                         response.should.have.status(400);
                         response.should.to.be.json;
-                        response.body.be.a('object');
+                        response.body.should.be.a('object');
                         response.body.should.have.property('error');
                         response.body.error.should.be.equal('The population value is invalid!');
                         done();
