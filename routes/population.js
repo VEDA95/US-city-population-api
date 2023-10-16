@@ -76,9 +76,9 @@ export default {
             const paramsValid = paramValidator(params);
             const bodyValid = bodyValidator(bodyInt);
 
-            if(!paramsValid || !bodyValid) {    
+            if(!paramsValid || !bodyValid) {
                 let errMessage = '';
-    
+
                 if(paramValidator.errors != null && paramValidator.errors.length > 0) {
                     const paramErr = paramValidator.errors[0];
 
@@ -89,7 +89,7 @@ export default {
                     errMessage = 'The population value is invalid!';
 
                 }
-               
+
                 response.writeHead(400, { 'Content-Type': 'application/json' });
                 response.write(JSON.stringify({ error: errMessage }));
                 response.end();
@@ -102,7 +102,9 @@ export default {
             const population = cities != null ? cities[city] : null;
 
             if(cities == null || (cities != null && population == null)) {
-                this.data.setData(state, { [city]: bodyInt })
+                const newData = cities != null ? { ...cities, [city]: bodyInt } : { [city]: bodyInt };
+
+                this.data.setData(state, newData)
                     .then(() => {
                         response.writeHead(201, { 'Content-Type': 'application/json' });
                         response.write(JSON.stringify({ population: bodyInt }));
@@ -113,7 +115,7 @@ export default {
                         response.end();
                         throw err;
                     });
-                
+
                 return;
             }
 
