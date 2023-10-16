@@ -70,12 +70,12 @@ describe('API Endpoint /api/population/state/:state/city/:city', () => {
     });
 
     describe('PUT', () => {
-        const population = Math.random() * 1000000;
+        const population = Math.floor(Math.random() * 1000000);
 
         describe('Success', () => {
             it('201 - Updated population value successfully', (done) => {
                 chai.request(app)
-                    .put('/api/population/state/Virginia/city/Arlington')
+                    .put('/api/population/state/Virginia/city/Alexandria')
                     .set('Content-Type', 'text/plain')
                     .send(population.toString())
                     .end((_, response) => {
@@ -90,7 +90,7 @@ describe('API Endpoint /api/population/state/:state/city/:city', () => {
     
             it('200 - Population value not updated', (done) => {
                 chai.request(app)
-                    .put('/api/population/state/Virginia/city/Arlington')
+                    .put('/api/population/state/Virginia/city/Alexandria')
                     .set('Content-Type', 'text/plain')
                     .send(population.toString())
                     .end((_, response) => {
@@ -107,7 +107,7 @@ describe('API Endpoint /api/population/state/:state/city/:city', () => {
         describe('Error', () => {
             it('400 - City or State not found', (done) => {
                 chai.request(app)
-                    .put('/api/population/state/Canada/city/Arlington')
+                    .put('/api/population/state/Canada/city/Alexandria')
                     .set('Content-Type', 'text/plain')
                     .send(population.toString())
                     .end((_, response) => {
@@ -122,7 +122,7 @@ describe('API Endpoint /api/population/state/:state/city/:city', () => {
     
             it('400 - Invalid State params', (done) => {
                 chai.request(app)
-                    .put('/api/population/state/%20/city/Arlington')
+                    .put('/api/population/state/%20/city/Alexandria')
                     .set('Content-Type', 'text/plain')
                     .send(population.toString())
                     .end((_, response) => {
@@ -152,7 +152,7 @@ describe('API Endpoint /api/population/state/:state/city/:city', () => {
 
             it('400 - Invalid Content Type', (done) => {
                 chai.request(app)
-                    .put('/api/population/state/Virginia/city/Arlington')
+                    .put('/api/population/state/Virginia/city/Alexandria')
                     .set('Content-Type', 'application/json')
                     .send(population.toString())
                     .end((_, response) => {
@@ -167,9 +167,9 @@ describe('API Endpoint /api/population/state/:state/city/:city', () => {
     
             it('400 - Invalid Body value', (done) => {
                 chai.request(app)
-                    .put('/api/population/state/Virginia/city/Arlington')
+                    .put('/api/population/state/Virginia/city/Alexandria')
                     .set('Content-Type', 'text/plain')
-                    .send(population.toString())
+                    .send('HARAMBE!')
                     .end((_, response) => {
                         response.should.have.status(400);
                         response.should.to.be.json;
