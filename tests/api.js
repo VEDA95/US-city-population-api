@@ -12,76 +12,71 @@ chai.use(chaiHttp);
 describe('API Endpoint /api/population/state/:state/city/:city', () => {
     describe('GET', () => {
         describe('Success', () => {
-            it('200 - OK', (done) => {
-                chai.request(app)
-                    .get('/api/population/state/Florida/city/Orlando')
-                    .set('Content-Type', 'application/json')
-                    .end((_, response) => {
-                        response.should.have.status(200);
-                        response.should.to.be.json;
-                        response.body.should.be.a('object');
-                        response.body.should.have.property('population');
-                        response.body.population.should.be.equal(populationData.Florida.Orlando);
-                        done();
-                    });
+            it('200 - OK', async () => {
+                const response = await chai.request(app)
+                                            .get('/api/population/state/Florida/city/Orlando')
+                                            .set('Content-Type', 'application/json');
+
+                response.should.have.status(200);
+                response.should.to.be.json;
+                response.body.should.be.a('object');
+                response.body.should.have.property('population');
+                response.body.population.should.be.equal(populationData.Florida.Orlando);
+
             });
 
-            it('200 - Non Case-Sensitve', (done) => {
-                chai.request(app)
-                    .get('/api/population/state/florida/city/orlando')
-                    .set('Content-Type', 'application/json')
-                    .end((_, response) => {
-                        response.should.have.status(200);
-                        response.should.to.be.json;
-                        response.body.should.be.a('object');
-                        response.body.should.have.property('population');
-                        response.body.population.should.be.equal(populationData.Florida.Orlando);
-                        done();
-                    });
+            it('200 - Non Case-Sensitve', async () => {
+                const response = await chai.request(app)
+                                            .get('/api/population/state/florida/city/orlando')
+                                            .set('Content-Type', 'application/json');
+
+                response.should.have.status(200);
+                response.should.to.be.json;
+                response.body.should.be.a('object');
+                response.body.should.have.property('population');
+                response.body.population.should.be.equal(populationData.Florida.Orlando);
+
             });
         });
 
         describe('Error', () => {
-            it('400 - City or State not found', (done) => {
-                chai.request(app)
-                    .get('/api/population/state/Canada/city/Orlando')
-                    .set('Content-Type', 'application/json')
-                    .end((_, response) => {
-                        response.should.have.status(400);
-                        response.should.to.be.json;
-                        response.body.should.be.a('object');
-                        response.body.should.have.property('error');
-                        response.body.error.should.be.equal('State or City could not be found!');
-                        done();
-                    });
-            });
-    
-            it('400 - Invalid State params', (done) => {
-                chai.request(app)
-                    .get('/api/population/state/%20/city/Orlando')
-                    .set('Content-Type', 'application/json')
-                    .end((_, response) => {
-                        response.should.have.status(400);
-                        response.should.to.be.json;
-                        response.body.should.be.a('object');
-                        response.body.should.have.property('error');
-                        response.body.error.should.be.equal('State parameter is invalid!');
-                        done();
-                    });
+            it('400 - City or State not found', async () => {
+                const response = await chai.request(app)
+                                            .get('/api/population/state/Canada/city/Orlando')
+                                            .set('Content-Type', 'application/json');
+
+                response.should.have.status(400);
+                response.should.to.be.json;
+                response.body.should.be.a('object');
+                response.body.should.have.property('error');
+                response.body.error.should.be.equal('State or City could not be found!');
+
             });
 
-            it('400 - Invalid City params', (done) => {
-                chai.request(app)
-                    .get('/api/population/state/Florida/city/%20')
-                    .set('Content-Type', 'application/json')
-                    .end((_, response) => {
-                        response.should.have.status(400);
-                        response.should.to.be.json;
-                        response.body.should.be.a('object');
-                        response.body.should.have.property('error');
-                        response.body.error.should.be.equal('City parameter is invalid!');
-                        done();
-                    });
+            it('400 - Invalid State params', async () => {
+                const response = await chai.request(app)
+                                            .get('/api/population/state/%20/city/Orlando')
+                                            .set('Content-Type', 'application/json');
+
+                response.should.have.status(400);
+                response.should.to.be.json;
+                response.body.should.be.a('object');
+                response.body.should.have.property('error');
+                response.body.error.should.be.equal('State parameter is invalid!');
+
+            });
+
+            it('400 - Invalid City params', async () => {
+                const response = await chai.request(app)
+                                            .get('/api/population/state/Florida/city/%20')
+                                            .set('Content-Type', 'application/json');
+
+                response.should.have.status(400);
+                response.should.to.be.json;
+                response.body.should.be.a('object');
+                response.body.should.have.property('error');
+                response.body.error.should.be.equal('City parameter is invalid!');
+
             });
         });
     });
@@ -90,37 +85,34 @@ describe('API Endpoint /api/population/state/:state/city/:city', () => {
         const population = Math.floor(Math.random() * 1000000);
 
         describe('Success', () => {
-            it('201 - Created population value successfully', (done) => {
+            it('201 - Created population value successfully', async () => {
                 const newValue1 = randomUUID();
                 const newValue2 = randomUUID();
+                const response = await chai.request(app)
+                                            .put(`/api/population/state/${newValue1}/city/${newValue2}`)
+                                            .set('Content-Type', 'text/plain')
+                                            .send(population.toString());
 
-                chai.request(app)
-                    .put(`/api/population/state/${newValue1}/city/${newValue2}`)
-                    .set('Content-Type', 'text/plain')
-                    .send(population.toString())
-                    .end((_, response) => {
-                        response.should.have.status(201);
-                        response.should.to.be.json;
-                        response.body.should.be.a('object');
-                        response.body.should.have.property('population');
-                        response.body.population.should.be.equal(population);
-                        done();
-                    });
+                response.should.have.status(201);
+                response.should.to.be.json;
+                response.body.should.be.a('object');
+                response.body.should.have.property('population');
+                response.body.population.should.be.equal(population);
+
             });
 
-            it('200 - Updated population value successfully', (done) => {
-                chai.request(app)
-                    .put('/api/population/state/Virginia/city/Alexandria')
-                    .set('Content-Type', 'text/plain')
-                    .send(population.toString())
-                    .end((_, response) => {
-                        response.should.have.status(200);
-                        response.should.to.be.json;
-                        response.body.should.be.a('object');
-                        response.body.should.have.property('population');
-                        response.body.population.should.be.equal(population);
-                        done();
-                    });
+            it('200 - Updated population value successfully', async () => {
+                const response = await chai.request(app)
+                                            .put('/api/population/state/Virginia/city/Alexandria')
+                                            .set('Content-Type', 'text/plain')
+                                            .send(population.toString());
+
+                response.should.have.status(200);
+                response.should.to.be.json;
+                response.body.should.be.a('object');
+                response.body.should.have.property('population');
+                response.body.population.should.be.equal(population);
+
             });
 
             it('200 - Updated population value successfully - Non Case-Sensitive', async () => {
@@ -135,70 +127,61 @@ describe('API Endpoint /api/population/state/:state/city/:city', () => {
                 response.should.to.be.json;
                 response.body.should.be.a('object');
                 response.body.should.have.property('population');
-                response.body.population.should.be.equal(population);
-                chai.expect(response.body.population).to.be.equal(persistedPopulationData['Virginia']['Alexandria']);
+                response.body.population.should.be.equal(persistedPopulationData['Virginia']['Alexandria']);
             });
         });
 
         describe('Error', () => {
-            it('400 - Invalid State params', (done) => {
-                chai.request(app)
-                    .put('/api/population/state/%20/city/Alexandria')
-                    .set('Content-Type', 'text/plain')
-                    .send(population.toString())
-                    .end((_, response) => {
-                        response.should.have.status(400);
-                        response.should.to.be.json;
-                        response.body.should.be.a('object');
-                        response.body.should.have.property('error');
-                        response.body.error.should.be.equal('State parameter is invalid!');
-                        done();
-                    });
+            it('400 - Invalid State params', async () => {
+                const response = await chai.request(app)
+                                            .put('/api/population/state/%20/city/Alexandria')
+                                            .set('Content-Type', 'text/plain')
+                                            .send(population.toString());
+
+                response.should.have.status(400);
+                response.should.to.be.json;
+                response.body.should.be.a('object');
+                response.body.should.have.property('error');
+                response.body.error.should.be.equal('State parameter is invalid!');
             });
 
-            it('400 - Invalid City params', (done) => {
-                chai.request(app)
-                    .put('/api/population/state/Virginia/city/%20')
-                    .set('Content-Type', 'text/plain')
-                    .send(population.toString())
-                    .end((_, response) => {
-                        response.should.have.status(400);
-                        response.should.to.be.json;
-                        response.body.should.be.a('object');
-                        response.body.should.have.property('error');
-                        response.body.error.should.be.equal('City parameter is invalid!');
-                        done();
-                    });
+            it('400 - Invalid City params', async () => {
+                const response = await chai.request(app)
+                                            .put('/api/population/state/Virginia/city/%20')
+                                            .set('Content-Type', 'text/plain')
+                                            .send(population.toString());
+
+                response.should.have.status(400);
+                response.should.to.be.json;
+                response.body.should.be.a('object');
+                response.body.should.have.property('error');
+                response.body.error.should.be.equal('City parameter is invalid!');
             });
 
-            it('400 - Invalid Content Type', (done) => {
-                chai.request(app)
-                    .put('/api/population/state/Virginia/city/Alexandria')
-                    .set('Content-Type', 'application/json')
-                    .send(population.toString())
-                    .end((_, response) => {
-                        response.should.have.status(400);
-                        response.should.to.be.json;
-                        response.body.should.be.a('object');
-                        response.body.should.have.property('error');
-                        response.body.error.should.be.equal('The body MIME type is invalid!');
-                        done();
-                    });
+            it('400 - Invalid Content Type', async () => {
+                const response = await chai.request(app)
+                                            .put('/api/population/state/Virginia/city/Alexandria')
+                                            .set('Content-Type', 'application/json')
+                                            .send(population.toString());
+
+                response.should.have.status(400);
+                response.should.to.be.json;
+                response.body.should.be.a('object');
+                response.body.should.have.property('error');
+                response.body.error.should.be.equal('The body MIME type is invalid!');
             });
 
-            it('400 - Invalid Body value', (done) => {
-                chai.request(app)
-                    .put('/api/population/state/Virginia/city/Alexandria')
-                    .set('Content-Type', 'text/plain')
-                    .send('HARAMBE!')
-                    .end((_, response) => {
-                        response.should.have.status(400);
-                        response.should.to.be.json;
-                        response.body.should.be.a('object');
-                        response.body.should.have.property('error');
-                        response.body.error.should.be.equal('The population value is invalid!');
-                        done();
-                    });
+            it('400 - Invalid Body value', async () => {
+                const response = await chai.request(app)
+                                            .put('/api/population/state/Virginia/city/Alexandria')
+                                            .set('Content-Type', 'text/plain')
+                                            .send('HARAMBE!');
+
+                response.should.have.status(400);
+                response.should.to.be.json;
+                response.body.should.be.a('object');
+                response.body.should.have.property('error');
+                response.body.error.should.be.equal('The population value is invalid!');
             });
         });
     });
