@@ -42,7 +42,9 @@ export default {
             return;
         }
 
-        const { state, city } = params;
+        let { state, city } = params;
+        state = `${state.charAt(0).toUpperCase()}${state.slice(1)}`;
+        city = `${city.charAt(0).toUpperCase()}${city.slice(1)}`;
         const cities = this.data.getData(state);
         const population = cities != null ? cities[city] : null;
 
@@ -97,7 +99,9 @@ export default {
 
             }
 
-            const { state, city } = params;
+            let { state, city } = params;
+            state = `${state.charAt(0).toUpperCase()}${state.slice(1)}`;
+            city = `${city.charAt(0).toUpperCase()}${city.slice(1)}`;
             const cities = this.data.getData(state);
             const population = cities != null ? cities[city] : null;
 
