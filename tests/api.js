@@ -23,6 +23,20 @@ describe('API Endpoint /api/population/state/:state/city/:city', () => {
                         done();
                     });
             });
+
+            it('200 - Non Case-Sensitve', (done) => {
+                chai.request(app)
+                    .get('/api/population/state/florida/city/orlando')
+                    .set('Content-Type', 'application/json')
+                    .end((_, response) => {
+                        response.should.have.status(200);
+                        response.should.to.be.json;
+                        response.body.should.be.a('object');
+                        response.body.should.have.property('population');
+                        response.body.population.should.be.equal(populationData.Florida.Orlando);
+                        done();
+                    });
+            });
         });
 
         describe('Error', () => {
@@ -53,7 +67,7 @@ describe('API Endpoint /api/population/state/:state/city/:city', () => {
                         done();
                     });
             });
-    
+
             it('400 - Invalid City params', (done) => {
                 chai.request(app)
                     .get('/api/population/state/Florida/city/%20')
@@ -91,10 +105,25 @@ describe('API Endpoint /api/population/state/:state/city/:city', () => {
                         done();
                     });
             });
-    
+
             it('200 - Updated population value successfully', (done) => {
                 chai.request(app)
                     .put('/api/population/state/Virginia/city/Alexandria')
+                    .set('Content-Type', 'text/plain')
+                    .send(population.toString())
+                    .end((_, response) => {
+                        response.should.have.status(200);
+                        response.should.to.be.json;
+                        response.body.should.be.a('object');
+                        response.body.should.have.property('population');
+                        response.body.population.should.be.equal(population);
+                        done();
+                    });
+            });
+
+            it('200 - Updated population value successfully - Non Case-Sensitive', (done) => {
+                chai.request(app)
+                    .put('/api/population/state/virginia/city/alexandria')
                     .set('Content-Type', 'text/plain')
                     .send(population.toString())
                     .end((_, response) => {
