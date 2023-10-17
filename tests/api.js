@@ -1,6 +1,8 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import { randomUUID } from 'node:crypto';
+import { readFile } from 'node:fs/promises';
+import path from 'node:path';
 import app from '../index.js';
 import populationData from '../data/city_population_obj.js';
 
@@ -121,19 +123,20 @@ describe('API Endpoint /api/population/state/:state/city/:city', () => {
                     });
             });
 
-            it('200 - Updated population value successfully - Non Case-Sensitive', (done) => {
-                chai.request(app)
-                    .put('/api/population/state/virginia/city/alexandria')
-                    .set('Content-Type', 'text/plain')
-                    .send(population.toString())
-                    .end((_, response) => {
-                        response.should.have.status(200);
-                        response.should.to.be.json;
-                        response.body.should.be.a('object');
-                        response.body.should.have.property('population');
-                        response.body.population.should.be.equal(population);
-                        done();
-                    });
+            it('200 - Updated population value successfully - Non Case-Sensitive', async () => {
+                const altPopulation = Math.floor(Math.random() * 1000000);
+                const response = await chai.request(app)
+                                            .put('/api/population/state/virginia/city/alexandria')
+                                            .set('Content-Type', 'text/plain')
+                                            .send(altPopulation.toString());
+                const persistedPopulationData = JSON.parse(await readFile(path.join(path.resolve('./data'), process.env.CITY_POPULATION_JSON_FILENAME), { encoding: 'utf-8' }));
+
+                response.should.have.status(200);
+                response.should.to.be.json;
+                response.body.should.be.a('object');
+                response.body.should.have.property('population');
+                response.body.population.should.be.equal(population);
+                chai.expect(response.body.population).to.be.equal(persistedPopulationData['Virginia']['Alexandria']);
             });
         });
 
@@ -152,7 +155,7 @@ describe('API Endpoint /api/population/state/:state/city/:city', () => {
                         done();
                     });
             });
-    
+
             it('400 - Invalid City params', (done) => {
                 chai.request(app)
                     .put('/api/population/state/Virginia/city/%20')
@@ -182,7 +185,7 @@ describe('API Endpoint /api/population/state/:state/city/:city', () => {
                         done();
                     });
             });
-    
+
             it('400 - Invalid Body value', (done) => {
                 chai.request(app)
                     .put('/api/population/state/Virginia/city/Alexandria')
