@@ -37,7 +37,7 @@ Even though providing unit tests for this assignment was not required, I have be
 The current unit tests test for two things in project code:
 
 - Reading/Writing JSON files for data persistance
-- HTTP responses for different HTTP requests sent to `/api/population/state/:state/city/:city` endpoint
+- HTTP responses for different HTTP requests sent to the `/api/population/state/:state/city/:city` endpoint
 
 ## Things I Could Improve On
 
