@@ -1,10 +1,10 @@
 # U.S. City Population API
 
-A Rest API written in Node.JS. Said API is meant to server population data by city for a given state in the United States. I wrote this API for a assignment for company I am interviewing with. The backend for this API is meant to be light on dependecies in order the best performance and throughtput possible.
+A Rest API written in Node.JS. Said API is meant to serve population data by city for a given state in the United States. I wrote this API for a assignment for a company I am interviewing with. The backend for this API is meant to be light on dependecies in order to achieve the best performance and throughtput possible.
 
 ## Objectives
 
-In order for this assignment to be considered complete the following requirements for project must be met:
+In order for this assignment to be considered complete the following requirements for the project must be met:
 
 - Must use Node.JS version 18
 - Written in plain Javascript (no typescript)
@@ -21,27 +21,27 @@ In order for this assignment to be considered complete the following requirement
 
 ## Dependecies Used
 
-For this project I opted not the use a web framework for implementing the backend for this REST API. For web server I am using the `http` module provided by Node.JS along with a handful of libraries that I would consider to be perfomant. The reason I went I decided to go with this route is because when compared to different Javascript web frameworks such as [Fastify](https://fastify.dev/), [Express.JS](https://expressjs.com/), and [HAPI](https://hapi.dev/), the generic HTTP module that Node.JS provides still has the better performance metrics when compared to said web frameworks. Benchmarks from the [Fastify benchmarks Repository](https://github.com/fastify/benchmarks/), [TechEmpower Web Framwork benchmarks](https://www.techempower.com/benchmarks/#section=data-r21&l=zik0sf-6bj&test=fortune), and the benchmarks performed by [Mark Choubey](https://medium.com/deno-the-complete-reference/the-hidden-cost-of-using-framework-fastify-vs-native-http-servers-in-node-js-17b364dfccfc) support these claims.
+For this project I opted not to use a web framework for implementing the backend for this REST API. For web server I am using the `http` module provided by Node.JS along with a handful of libraries that I would consider to be perfomant. The reason I decided to go down this path is because when compared to different Javascript web frameworks such as [Fastify](https://fastify.dev/), [Express.JS](https://expressjs.com/), and [HAPI](https://hapi.dev/), the generic HTTP module that Node.JS provides still has the better performance metrics when compared to said web frameworks. Benchmarks from the [Fastify benchmarks Repository](https://github.com/fastify/benchmarks/), [TechEmpower Web Framwork benchmarks](https://www.techempower.com/benchmarks/#section=data-r21&l=zik0sf-6bj&test=fortune), and the benchmarks performed by [Mark Choubey](https://medium.com/deno-the-complete-reference/the-hidden-cost-of-using-framework-fastify-vs-native-http-servers-in-node-js-17b364dfccfc) support these claims.
 
 This projects implementes the following libraries:
 
 - [find-my-way](https://github.com/delvedor/find-my-way) (HTTP router)
 - [dotenv](https://www.npmjs.com/package/dotenv) (Environment variable loading)
-- [Ajv](https://ajv.js.org/) (input validation)
+- [Ajv](https://ajv.js.org/) (Input validation)
 - [node-cache](https://github.com/node-cache/node-cache) (Data caching)
 
 ## Test Cases
 
-Even though providing unit tests for this assignment was not required, I have been trying to practice Test-Driven Development whenever working on projects that use plain Javascript or Typescript. I felt like this project would provide a decent challenge for implementing TDD. The Unit tests are created using [Mocha](https://mochajs.org/) and [Chai](https://www.chaijs.com/). Furthermore, I have also adde script command `npm build` in `package.json` in order to providing a convenient way of running unit tests included in this project.
+Even though providing unit tests for this assignment was not required, I have been trying to practice Test-Driven Development whenever working on projects that use plain Javascript or Typescript. I felt like this project would provide a decent challenge for implementing TDD. The Unit tests are created using [Mocha](https://mochajs.org/) and [Chai](https://www.chaijs.com/). Furthermore, I have also added the script command `npm build` to `package.json` in order to provide a convenient way of running unit tests included in this project.
 
 The current unit tests test for two things in project code:
 
 - Reading/Writing JSON files for data persistance
 - HTTP responses for different HTTP requests sent to the `/api/population/state/:state/city/:city` endpoint
 
-## Things I Could Improve On
+## Items that could be imporoved
 
-While I feel pretty good about how this project turned out, there are some things I would have done differently if I were to deploy this API for production. As this project is for interview assignment and meant to light on dependecies there are things I do differently compared to how I would normally implementing certain pieces of functionality in Node.JS. Some of these things include:
+While I feel pretty good about how this project turned out, there are some things I would have done differently if I were to deploy this API for production. As this project is for a interview assignment and meant to light on dependecies there are things I did differently compared to how I would normally implement certain pieces of functionality in Node.JS. Some of these things include:
 
 - Using Redis for caching instead of using `node-cache`
 - Persist the City / State data in a proper SQL database instead of storing said data in a JSON file.
